@@ -1,33 +1,63 @@
 
 
 import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia/config/helpers/huma_formats.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../domain/entities/movie.dart';
 
-class MovieHorizontalListview extends StatelessWidget {
+class MovieHorizontalListview extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
   final String? subTitle;
   final VoidCallback? loadNextPage;
   const MovieHorizontalListview({super.key, required this.movies, this.title, this.subTitle, this.loadNextPage});
-  
 
+  @override
+  State<MovieHorizontalListview> createState() => _MovieHorizontalListviewState();
+}
+
+class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
+  final scrollController= ScrollController();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(() {
+      if(widget.loadNextPage == null) return;
+      if((scrollController.position.pixels + 200)>= scrollController.position.maxScrollExtent){
+        print('load next movies');
+        widget.loadNextPage!();
+      }
+      
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    scrollController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 350,
       child: Column(
         children: [
-          if(title != null || subTitle!= null)
-          _Title(tittle: title,subTitle: subTitle,),
+          if(widget.title != null || widget.subTitle!= null)
+          _Title(tittle: widget.title,subTitle: widget.subTitle,),
           Expanded(child: 
           ListView.builder(
-            itemCount: movies.length,
+            controller: scrollController,
+            itemCount: widget.movies.length,
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics( ),
             itemBuilder: (context, index){
-              return _Slide(movie:movies[index] ,); 
+              return _Slide(movie:widget.movies[index] ,); 
             })
           )
         ],
@@ -83,15 +113,19 @@ class _Slide extends StatelessWidget {
               style:textStyles.titleSmall ,
             ),
           ),
-          Row(
-            children: [
-              Icon(Icons.star_half_outlined, color: Colors.yellow.shade800,),
-              SizedBox(width: 3,),
-              Text('${movie.voteAverage}',style: textStyles.bodyMedium?.copyWith(color:Colors.yellow.shade800 ),),
-              SizedBox(width:10,),
-             Text('${movie.popularity}',style: textStyles.bodySmall,),
-
-            ],
+          SizedBox(
+            width: 150,
+            child: Row(
+              children: [
+                Icon(Icons.star_half_outlined, color: Colors.yellow.shade800,),
+                SizedBox(width: 3,),
+                Text('${movie.voteAverage}',style: textStyles.bodyMedium?.copyWith(color:Colors.yellow.shade800 ),),
+                SizedBox(width:10,),
+                Spacer(),
+               Text(HumaFormats.number(movie.popularity),style: textStyles.bodySmall,),
+            
+              ],
+            ),
           )
         ],
       ),
