@@ -50,6 +50,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
         children: [
           if(widget.title != null || widget.subTitle!= null)
           _Title(tittle: widget.title,subTitle: widget.subTitle,),
+          SizedBox(height: 10,),
           Expanded(child: 
           ListView.builder(
             controller: scrollController,
