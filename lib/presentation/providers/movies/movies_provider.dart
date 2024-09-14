@@ -8,7 +8,7 @@ import '../../../domain/entities/movie.dart';
 
 final nowPlayingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
   
-  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
+final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
   
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies
@@ -18,6 +18,24 @@ final nowPlayingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movi
 final popularMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
   
   final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPopular;
+  
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
+final upcomingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getUpcomming;
+  
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
+final topRatedMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getTopRated;
   
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies
