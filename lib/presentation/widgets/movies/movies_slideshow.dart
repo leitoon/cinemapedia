@@ -22,7 +22,7 @@ class MoviesSlideshow extends StatelessWidget {
         scale: 0.9,
         autoplay: true,
         pagination: SwiperPagination(
-          margin: EdgeInsets.only(top: 0),
+          margin: const EdgeInsets.only(top: 0),
           builder: DotSwiperPaginationBuilder(
             activeColor: colors.primary,
             color: colors.secondary
@@ -51,7 +51,7 @@ class _Slide extends StatelessWidget {
         )
       ]
     );
-    return Padding(padding: EdgeInsets.only(bottom: 30),
+    return Padding(padding: const EdgeInsets.only(bottom: 30),
     child: DecoratedBox(
       decoration: decoration,
       
@@ -61,7 +61,7 @@ class _Slide extends StatelessWidget {
         fit: BoxFit.cover,
         loadingBuilder: (context, child, loadingProgress) {
           if(loadingProgress!=null){
-            return DecoratedBox(decoration: BoxDecoration(color: Colors.black12));
+            return const DecoratedBox(decoration: BoxDecoration(color: Colors.black12));
           }
           return FadeIn(child: child);
         },
