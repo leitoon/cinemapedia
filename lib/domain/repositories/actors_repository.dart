@@ -2,6 +2,6 @@
 
 import '../entities/actor.dart';
 
-abstract class ActorsDatasourse {
+abstract class ActorsRepository {
   Future<List<Actor>> getActorsByMovie(String movieId);
 }
