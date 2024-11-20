@@ -100,7 +100,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
               ref.read(topRatedMoviesProvider.notifier).loadNextPage();
             } ,
             ),
-            SizedBox(height: 15,)
+            const SizedBox(height: 15,)
         
         
                   ],
