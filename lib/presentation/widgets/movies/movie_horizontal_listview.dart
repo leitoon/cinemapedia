@@ -125,7 +125,7 @@ class _Slide extends StatelessWidget {
               children: [
                 Icon(Icons.star_half_outlined, color: Colors.yellow.shade800,),
                 SizedBox(width: 3,),
-                Text('${movie.voteAverage}',style: textStyles.bodyMedium?.copyWith(color:Colors.yellow.shade800 ),),
+                Text(HumaFormats.number(movie.voteAverage,1),style: textStyles.bodyMedium?.copyWith(color:Colors.yellow.shade800 ),),
                 SizedBox(width:10,),
                 Spacer(),
                Text(HumaFormats.number(movie.popularity),style: textStyles.bodySmall,),
