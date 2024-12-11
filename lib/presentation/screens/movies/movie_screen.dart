@@ -1,9 +1,10 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:cinemapedia/infrastructure/repositories/local_storage_repository_impl.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/movie.dart';
+import '../../widgets/movies/similar_movies.dart';
+import '../../widgets/videos/videos_from_movie.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-scree';
@@ -102,7 +103,10 @@ class _MovieDetails extends StatelessWidget {
         ),
         ),
         _ActorsByMovie(movieId: movie.id.toString()),
-
+        //* Videos de la película (si tiene)
+        VideosFromMovie( movieId: movie.id ),
+        //* Películas similares
+        SimilarMovies(movieId: movie.id ),
         const SizedBox(height: 500,)
       ],
     );
@@ -121,7 +125,7 @@ class _ActorsByMovie extends ConsumerWidget {
     }
     final actors = actorsByMovie[movieId]!;
     return SizedBox(
-      height: 300,
+      height: 280,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: actors.length,
@@ -174,8 +178,9 @@ class _CustomSliverAppbar extends ConsumerWidget {
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
       actions: [
-        IconButton(onPressed: (){
-          ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
+        IconButton(onPressed: () async{
+          //ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
+          await ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
           ref.invalidate(isFavoriteProvider(movie.id));
         }, 
         icon: isFavoriteFuture.when(

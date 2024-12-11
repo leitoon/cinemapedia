@@ -86,6 +86,7 @@ class _Slide extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
+                errorBuilder: (context, error, stackTrace) => Image.network('https://www.chem.indiana.edu/wp-content/uploads/2023/09/defaultpic.jpg'),
                 fit: BoxFit.cover,
                 movie.posterPath,
                 height: 220,
@@ -99,6 +100,7 @@ class _Slide extends StatelessWidget {
                       ),
                     );
                   }
+                
                   return GestureDetector(
 
                     onTap: () => context.push("/home/0/movie/${movie.id}"),
